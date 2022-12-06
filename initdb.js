@@ -1,8 +1,19 @@
-db = db.getSiblingDB(`user`);
+db = db.getSiblingDB(`userdb`);
 
-db.createCollection(`user`);
+db.createCollection(`userdbs`);
 
-db.course.insertMany([
+db.createUser({
+  user: `userdb`,
+  pwd: `userdb`,
+  roles: [
+    {
+      role: `readWrite`,
+      db: `userdb`,
+    },
+  ],
+});
+
+db.userdbs.insertMany([
   {
     firstname: 'jean',
     lastname: 'lamotte',
