@@ -1,6 +1,6 @@
-export class CreateUserDto {
+export class GetUserDto {
     firstname: string;
     lastname: string;
-    birthday: Date;
+    age: number;
     mail:string;
 }
