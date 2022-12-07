@@ -1,16 +1,15 @@
-import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { User, UserDocument } from './schemas/user.schema';
+import { User } from './schemas/user.schema';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { GetUserDto } from './dto/get-user.dto';
 import * as moment from 'moment';
 import { Duration, Moment } from 'moment';
+import { UserRepository } from './repo/users.repository';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(private userRepository: UserRepository) {}
 
   age = (birthday: Date): number => {
     let now: Moment = moment(new Date());
@@ -20,12 +19,11 @@ export class UsersService {
   };
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const createdUser = new this.userModel(createUserDto);
-    return await createdUser.save();
+    return await this.userRepository.create(createUserDto);
   }
 
   async findAll(): Promise<GetUserDto[]> {
-    let user: User[] = await Promise.resolve(this.userModel.find().exec());
+    let user: User[] = await this.userRepository.findAll();
     let usersWithAge: GetUserDto[] = user.map((user) => {
       return {
         firstname: user.firstname,
@@ -38,7 +36,7 @@ export class UsersService {
   }
 
   async findById(id: string): Promise<GetUserDto> {
-    let user: User = await Promise.resolve(this.userModel.findById(id).exec());
+    let user: User = await this.userRepository.findById(id);
     return {
       firstname: user.firstname,
       lastname: user.lastname,
@@ -47,19 +45,17 @@ export class UsersService {
     };
   }
 
-  async deleteById(id: string): Promise<User> {
-    return await Promise.resolve(this.userModel.findByIdAndDelete(id).exec());
+  async deleteById(id: string): Promise<void> {
+    return await this.userRepository.deleteById(id);
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<string> {
-    await this.userModel
-      .updateOne(
-        {
-          _id: id,
-        },
-        updateUserDto,
-      )
-      .exec();
-      return "Utilisateur modifié"
+    await this.userRepository.update(id, updateUserDto);
+    return 'Utilisateur modifié';
+  }
+
+  async test() : Promise<string>{
+    let test = await this.userRepository.test();
+    return test
   }
 }
