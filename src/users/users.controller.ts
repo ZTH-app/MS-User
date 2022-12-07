@@ -5,7 +5,7 @@ import {
   Body,
   Param,
   Delete,
-  Put,
+  Patch,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -57,7 +57,7 @@ export class UsersController {
     return this.usersService.deleteById(id);
   }
 
-  @Put(':id')
+  @Patch(':id')
   @ApiResponse({
     status: 200,
     description: 'Modifie un utilisateur via son id',
