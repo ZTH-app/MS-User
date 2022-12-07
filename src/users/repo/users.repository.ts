@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { User, UserDocument } from '../schemas/user.schema';
+import fetch from 'node-fetch';
 
 @Injectable()
 export class UserRepository {
@@ -36,5 +37,20 @@ export class UserRepository {
         course,
       )
       .exec();
+  }
+
+  async test(): Promise<string> {
+    var myInit = { method: 'GET',
+               mode: 'cors',
+               cache: 'default' };
+    let test = await fetch('http://127.0.0.1:3001/', myInit).then((value : string)=> {
+      return value
+    })
+    // if(test.ok){
+    //   return test
+    // } else {
+    //   return "error"
+    // }
+    return await test.json()
   }
 }

@@ -53,4 +53,9 @@ export class UsersService {
     await this.userRepository.update(id, updateUserDto);
     return 'Utilisateur modifié';
   }
+
+  async test() : Promise<string>{
+    let test = await this.userRepository.test();
+    return test
+  }
 }

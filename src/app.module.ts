@@ -9,7 +9,7 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({
       envFilePath: '.env',
     }),
-    MongooseModule.forRoot(`${process.env.MONGO_URL}`),
+    MongooseModule.forRoot(`${process.env.MONGO_URI}`),
   ],
 })
 export class AppModule {}
