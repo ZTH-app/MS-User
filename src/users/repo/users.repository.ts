@@ -7,9 +7,7 @@ import fetch from 'node-fetch';
 
 @Injectable()
 export class UserRepository {
-  constructor(
-    @InjectModel(User.name) private userModel: Model<UserDocument>,
-  ) {}
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async create(course: User) {
     const createdUser = new this.userModel(course);
@@ -40,17 +38,12 @@ export class UserRepository {
   }
 
   async test(): Promise<string> {
-    var myInit = { method: 'GET',
-               mode: 'cors',
-               cache: 'default' };
-    let test = await fetch('http://127.0.0.1:3001/', myInit).then((value : string)=> {
-      return value
-    })
-    // if(test.ok){
-    //   return test
-    // } else {
-    //   return "error"
-    // }
-    return await test.json()
+    var myInit = { method: 'GET', mode: 'cors', cache: 'default' };
+    let test = await fetch('http://127.0.0.1:3001/', myInit).then(
+      (value: string) => {
+        return value;
+      },
+    );
+    return await test.json();
   }
 }
