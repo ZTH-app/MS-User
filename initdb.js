@@ -17,13 +17,13 @@ db.userdbs.insertMany([
   {
     firstname: 'jean',
     lastname: 'lamotte',
-    birthday: '',
+    birthday: "1995-12-12T03:20:51.995Z",
     mail: 'test@gmail.com',
   },
   {
     firstname: 'gerard',
     lastname: 'dupont',
-    birthday: '',
+    birthday: "2003-12-12T03:20:51.995Z",
     mail: 'gerard@gmail.com',
   },
 ]);

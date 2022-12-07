@@ -21,7 +21,7 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const createdUser = new this.userModel(createUserDto);
-    return await createdUser.save()
+    return await createdUser.save();
   }
 
   async findAll(): Promise<GetUserDto[]> {
@@ -51,16 +51,15 @@ export class UsersService {
     return await Promise.resolve(this.userModel.findByIdAndDelete(id).exec());
   }
 
-  async update(
-    id: string,
-    updateUserDto: UpdateUserDto,
-  ): Promise<UpdateUserDto> {
-    const updateUser = new this.userModel(updateUserDto);
-    return updateUser.updateOne(
-      {
-        _id: id,
-      },
-      updateUserDto,
-    );
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<string> {
+    await this.userModel
+      .updateOne(
+        {
+          _id: id,
+        },
+        updateUserDto,
+      )
+      .exec();
+      return "Utilisateur modifié"
   }
 }
