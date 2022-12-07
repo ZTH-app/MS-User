@@ -1,8 +1,21 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+
+  const config = new DocumentBuilder()
+    .setTitle('Microservice MS-User')
+    .setDescription('API user')
+    .setVersion('1.0')
+    .addTag('users')
+    .build();
+
+  const PORT = process.env.PORT || 3000;
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+
+  await app.listen(PORT);
 }
 bootstrap();
