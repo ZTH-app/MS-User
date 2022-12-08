@@ -1,4 +1,4 @@
-# MS-COURSE
+# MS-USER
 
 Micro service pour gérer les utilisateurs d'un établissement scolaire
 
