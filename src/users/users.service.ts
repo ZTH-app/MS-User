@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './schemas/user.schema';
+import { Userdb as User } from './schemas/user.schema';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { GetUserDto } from './dto/get-user.dto';
@@ -23,9 +23,10 @@ export class UsersService {
   }
 
   async findAll(): Promise<GetUserDto[]> {
-    let user: User[] = await this.userRepository.findAll();
+    let user: any[] = await this.userRepository.findAll();
     let usersWithAge: GetUserDto[] = user.map((user) => {
       return {
+        _id : user._id,
         firstname: user.firstname,
         lastname: user.lastname,
         age: this.age(user.birthday),
@@ -36,8 +37,9 @@ export class UsersService {
   }
 
   async findById(id: string): Promise<GetUserDto> {
-    let user: User = await this.userRepository.findById(id);
+    let user : any = await this.userRepository.findById(id);
     return {
+      _id: user.id,
       firstname: user.firstname,
       lastname: user.lastname,
       age: this.age(user.birthday),
